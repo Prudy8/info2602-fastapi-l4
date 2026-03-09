@@ -51,3 +51,8 @@ class Todo(SQLModel, table=True):
     
     def get_cat_list(self):
         return ', '.join([category.text for category in self.categories])
+    
+class UserCreate(SQLModel):
+    username:str
+    email: EmailStr = Field(max_length=255)
+    password: str = Field(min_length=8, max_length=128)
