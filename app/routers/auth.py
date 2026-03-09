@@ -25,3 +25,7 @@ async def login_for_access_token(
     access_token = create_access_token(data={"sub": f"{user.id}", "role": user.role},)
 
     return Token(access_token=access_token, token_type="bearer")
+
+@auth_router.get("/identify", response_model=UserResponse)
+def get_user_by_id(db: SessionDep, user:AuthDep):
+    return user
