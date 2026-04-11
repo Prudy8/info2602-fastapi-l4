@@ -1,0 +1,17 @@
+$kind: http-example
+request:
+  url: "{{host}}"
+  method: GET
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Access-Control-Allow-Origin: "*"
+    Content-Length: "22"
+    Content-Type: text/html; charset=utf-8
+    Date: Sun, 03 Mar 2024 00:31:41 GMT
+    Server: Werkzeug/3.0.1 Python/3.8.16
+  body:
+    type: html
+    content: <h1>Poke API v1.0</h1>
+order: 1000
