@@ -1,0 +1,29 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/signup"
+  method: POST
+  headers:
+    Content-Type: application/json
+    Accept: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "username": "string",
+        "email": "G3UFS@LreOPUOKgDIaIhzqCJYoErRVKcIUWVCn.qk",
+        "password": "stringstring"
+      }
+response:
+  statusCode: 201
+  statusText: Created
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "id": 5077,
+        "username": "string",
+        "email": "ovxlZvm4@NLWHehExbdETMXXzOTHgB.ixyv"
+      }
+order: 1000
