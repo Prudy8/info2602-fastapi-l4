@@ -1,0 +1,30 @@
+$kind: http-example
+request:
+  url: "{{host}}/mypokemon/{{bad_id}}"
+  method: PUT
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: '{ "name": "{{$randomFirstName}}"}'
+response:
+  statusCode: 401
+  statusText: Unauthorized
+  headers:
+    Content-Length: "65"
+    Content-Type: application/json
+    Date: Tue, 10 Feb 2026 13:27:17 GMT
+    Server: uvicorn
+    Vary: Origin
+    X-Coder-Build-Version: v2.30.0+43e67d1
+    X-Coder-Request-Id: d9aa4152-eb08-4fb1-9494-d61e5b5cfdd3
+    X-Ratelimit-Limit: "512"
+    X-Ratelimit-Remaining: "510"
+    X-Ratelimit-Reset: "1770730080"
+  body:
+    type: text
+    content: |-
+      {
+          "detail": "Id 121693 is invalid or does not belong to Sam_Hane4"
+      }
+order: 1000
