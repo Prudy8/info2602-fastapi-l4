@@ -1,0 +1,34 @@
+$kind: http-example
+request:
+  url: "{{host}}/mypokemon"
+  method: POST
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+      	"pokemon_id":{{bad_id}},
+      	"name": "{{$randomFirstName}}"
+      }
+response:
+  statusCode: 400
+  statusText: Bad Request
+  headers:
+    Content-Length: "44"
+    Content-Type: application/json
+    Date: Tue, 10 Feb 2026 13:05:19 GMT
+    Server: uvicorn
+    Vary: Origin
+    X-Coder-Build-Version: v2.30.0+43e67d1
+    X-Coder-Request-Id: 5d71c6ba-2a8d-4193-870e-a2cf4afa4a1a
+    X-Ratelimit-Limit: "512"
+    X-Ratelimit-Remaining: "507"
+    X-Ratelimit-Reset: "1770728760"
+  body:
+    type: text
+    content: |-
+      {
+          "detail": "17565 is not a valid pokemon id"
+      }
+order: 1000
