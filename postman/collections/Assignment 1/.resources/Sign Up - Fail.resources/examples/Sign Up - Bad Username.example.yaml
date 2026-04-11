@@ -1,0 +1,35 @@
+$kind: http-example
+request:
+  url: "{{host}}/signup"
+  method: POST
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+      	"username": "{{username}}",
+      	"email": "{{$randomEmail}}",
+      	"password": "{{$randomPassword}}"
+      }
+response:
+  statusCode: 400
+  statusText: Bad Request
+  headers:
+    Content-Length: "45"
+    Content-Type: application/json
+    Date: Tue, 10 Feb 2026 12:43:55 GMT
+    Server: uvicorn
+    Vary: Origin
+    X-Coder-Build-Version: v2.30.0+43e67d1
+    X-Coder-Request-Id: 363489ac-cb54-431c-8971-5d60bc8eae5b
+    X-Ratelimit-Limit: "512"
+    X-Ratelimit-Remaining: "510"
+    X-Ratelimit-Reset: "1770727440"
+  body:
+    type: text
+    content: |-
+      {
+          "detail": "username or email already exists"
+      }
+order: 1000
