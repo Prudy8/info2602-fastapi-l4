@@ -1,0 +1,22 @@
+$kind: http-request
+url: "{{baseUrl}}/todo/:id"
+method: PUT
+headers:
+  Content-Type: application/json
+  Accept: application/json
+pathVariables:
+  id: "9312"
+body:
+  type: json
+  content: |-
+    {
+      "text": null,
+      "done": false
+    }
+auth:
+  type: oauth2
+  credentials:
+    accessTokenUrl: token
+    grant_type: password_credentials
+examples: ./.resources/Update Todo.resources/examples
+order: 2000
