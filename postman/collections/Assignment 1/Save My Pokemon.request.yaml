@@ -1,0 +1,63 @@
+$kind: http-request
+description: >-
+  Captures a pokemon, adding it to the user's collection with a given name.
+
+
+  This creates a UserPokemon object with the given pokemon_id, name and an id of
+  the authorized user.
+
+
+  Should return the newly created object's UserPokmeon.id
+url: "{{host}}/mypokemon"
+method: POST
+headers:
+  Content-Type: application/json
+  Cookie: access_token={{access_token}}
+body:
+  type: json
+  content: |-
+    {
+    	"pokemon_id":{{random_num}},
+    	"name": "{{$randomFirstName}}"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{access_token}}"
+scripts:
+  - type: beforeRequest
+    code: pm.collectionVariables.set("random_num", _.random(1, 100));
+    language: text/javascript
+  - type: afterResponse
+    code: >+
+      pm.test("Content-Type header is application/json", () => {
+        pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');
+      });
+
+
+      if(pm.response.headers.get('Content-Type') == 'application/json'){
+
+      	const { message } = pm.response.json();
+      	const { name, pokemon_id } = JSON.parse(pm.request.body.raw);
+
+
+      	pm.test("Should save a new MyPokemon object and return the name and id in a message", function () {
+      			let [prefix, id] = message.split(' id: ');
+      			pm.collectionVariables.set('id', id);
+      			pm.collectionVariables.set('name', name);
+      			pm.expect(message).to.eql(`${name} captured with id: ${id}`);
+      		}
+      	);
+
+      	pm.test("Should have the correct status code", function () {
+      		
+      		pm.expect(pm.response.code).to.eql(201);
+      		
+      	});
+
+      }
+
+
+    language: text/javascript
+examples: ./.resources/Save My Pokemon.resources/examples
+order: 8000
