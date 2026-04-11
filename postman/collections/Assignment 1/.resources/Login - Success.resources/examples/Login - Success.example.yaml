@@ -1,0 +1,40 @@
+$kind: http-example
+request:
+  url: "{{host}}/login"
+  method: POST
+  headers:
+    Content-Type: application/json
+  body:
+    type: formdata
+    content:
+      - type: text
+        key: username
+        value: "{{username}}"
+      - type: text
+        key: password
+        value: "{{password}}"
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Length: "157"
+    Content-Type: application/json
+    Date: Tue, 10 Feb 2026 12:50:39 GMT
+    Server: uvicorn
+    Set-Cookie: coder_signed_app_token=eyJhbGciOiJIUzUxMiIsImtpZCI6IjEwIn0.eyJleHAiOjE3NzA3Mjc5MDAsInJlcXVlc3QiOnsiYWNjZXNzX21ldGhvZCI6InN1YmRvbWFpbiIsImJhc2VfcGF0aCI6Ii8iLCJhcHBfcHJlZml4IjoiIiwidXNlcm5hbWVfb3JfaWQiOiJrd2FzaS1kZXYiLCJ3b3Jrc3BhY2VfbmFtZV9vcl9pZCI6InV3aWRjaXRpbmZvMjYwMmFzc2lnbm1lbnQxIiwiYWdlbnRfbmFtZV9vcl9pZCI6Im1haW4iLCJhcHBfc2x1Z19vcl9wb3J0IjoiODAwMCJ9LCJ1c2VyX2lkIjoiM2ZkNTU1MDUtNjQyZS00NTE4LThmN2UtZjBhZWJhNzYxMmJkIiwid29ya3NwYWNlX2lkIjoiZTRmMTQ0N2UtOWQ1Ni00NzkzLTk0NzgtYmY4NGNhNTBiMWIwIiwiYWdlbnRfaWQiOiJlYmFlMGUzNC1hOTVjLTRhMjctYWQ0ZC1iZDAzNDNiNTZlZDAiLCJhcHBfdXJsIjoiaHR0cDovLzEyNy4wLjAuMTo4MDAwIiwiY29yc19iZWhhdmlvciI6InNpbXBsZSJ9.mbD5527Z7Ghu_bZFJQ3e42AV2r_i_L3Bd95Kgo9eY8nS2BqMGVmYP_jDNvDcmokfxk-M11kedCKqlxF54tsX9A;
+      Path=/; Expires=Tue, 10 Feb 2026 12:51:40 GMT; HttpOnly; Secure;
+      SameSite=Lax
+    Vary: Origin
+    X-Coder-Build-Version: v2.30.0+43e67d1
+    X-Coder-Request-Id: 426bdad8-c350-4f30-9eab-e23313373340
+    X-Ratelimit-Limit: "512"
+    X-Ratelimit-Remaining: "509"
+    X-Ratelimit-Reset: "1770727860"
+  body:
+    type: text
+    content: >-
+      {
+          "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImV4cCI6MTc3MDcyODc0MH0.62Xn37f2ms8J_N_E5B6CCW6rLMSK9MfaxmnMOEPEAL0",
+          "token_type": "bearer"
+      }
+order: 1000
