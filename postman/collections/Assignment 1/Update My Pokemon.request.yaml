@@ -1,0 +1,65 @@
+$kind: http-request
+description: >-
+  Allows a user to rename their pokemon
+
+
+  Updates the UserPokemon object of the specified UserPokemon.id given at the
+  end or the url if it is associated with the authorized user.
+url: "{{host}}/mypokemon/{{id}}"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: '{ "name": "{{$randomFirstName}}"}'
+auth:
+  type: bearer
+  credentials:
+    token: "{{access_token}}"
+scripts:
+  - type: afterResponse
+    code: >+
+      const token = pm.collectionVariables.get("access_token");
+
+
+      let { name } = JSON.parse(pm.request.body);
+
+      pm.collectionVariables.set('name', name);
+
+
+      pm.test("Content-Type header is application/json", () => {
+        pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');
+      });
+
+
+      if(pm.response.headers.get('Content-Type') == 'application/json'){
+
+      	pm.test("Should update the corresponding pokemon", function () {
+      		pm.sendRequest(
+      			{
+      				url:pm.request.url.toString(),
+      				method:'GET',
+                      header: {
+                          Authorization: `Bearer ${token}`,
+                          Accept: 'application/json'
+                      }
+      			}, 
+      			function (err, response) {
+                      pm.expect(err).to.be.null;
+                      pm.expect(response).to.exist;
+                      pm.expect(response.code).to.equal(200);
+
+      				pm.expect(name).eql(response.json().name);
+      			}
+      		);
+      	});
+
+      	pm.test("Should return <oldname> renamed to <new name>", function () {
+      		let { message } = pm.response.json();
+      		pm.expect(message).to.include(`${name}`);
+      	});
+      }
+
+    language: text/javascript
+examples: ./.resources/Update My Pokemon.resources/examples
+order: 13000
