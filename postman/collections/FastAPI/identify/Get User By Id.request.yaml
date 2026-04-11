@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/identify"
+method: GET
+headers:
+  Accept: application/json
+auth:
+  type: oauth2
+  credentials:
+    accessTokenUrl: token
+    grant_type: password_credentials
+examples: ./.resources/Get User By Id.resources/examples
+order: 1000
