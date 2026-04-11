@@ -1,0 +1,72 @@
+$kind: http-request
+description: Returns an appropriate error and status code when the
+  UserPokemon.id given in the url is invalid or does not belong to the user.
+url: "{{host}}/mypokemon/{{bad_id}}"
+method: DELETE
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: ""
+auth:
+  type: bearer
+  credentials:
+    token: "{{access_token}}"
+scripts:
+  - type: afterResponse
+    code: "const username = pm.collectionVariables.get('username');\r
+
+      \r
+
+      let bad_id = pm.collectionVariables.get(\"bad_id\");\r
+
+      \r
+
+      pm.test(\"Content-Type header is application/json\", () => {\r
+
+      \ 
+      pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/js\
+      on');\r
+
+      });\r
+
+      \r
+
+      if(pm.response.headers.get('Content-Type') == 'application/json'){\r
+
+      \r
+
+      \r
+
+      \tpm.test(`Should return 'Id ${bad_id} is invalid or does not belong to
+      ${username}'`, function () {\r
+
+      \        var {detail} = pm.response.json();\r
+
+      \t\tpm.expect(detail).to.eql(`Id ${bad_id} is invalid or does not belong
+      to ${username}`);\r
+
+      \t});\r
+
+      \r
+
+      \r
+
+      \tpm.test(\r
+
+      \t\t\"Should respond with the correct status\", \r
+
+      \t\tfunction () {\r
+
+      \t\t\tpm.response.to.have.status(401);\r
+
+      \t\t}\r
+
+      \t);\r
+
+      \r
+
+      }"
+    language: text/javascript
+examples: ./.resources/Delete My Pokemon - Bad ID.resources/examples
+order: 16000
