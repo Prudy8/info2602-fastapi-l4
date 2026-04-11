@@ -1,0 +1,39 @@
+$kind: http-request
+description: |-
+  Lists the pokemon which belong to the user.
+
+  Returns all UserPokemon objects that are associated with the authorized user.
+url: "{{host}}/mypokemon"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{access_token}}"
+scripts:
+  - type: afterResponse
+    code: >-
+      var schema = {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+      		"id":{"type":"number"},
+              "name":{"type":"string"},
+              "species":{"type":"string"}
+          },
+          "required": [ "id", "name", "species"]
+        }
+      };
+
+
+
+      pm.test(
+          `Pokemon data should have the attributes name and status with the appropriate values`, 
+          function() {
+              var jsonData = pm.response.json();
+              pm.expect(tv4.validate(jsonData, schema)).to.be.true;
+          }
+      );
+    language: text/javascript
+examples: ./.resources/List My Pokemon.resources/examples
+order: 10000
