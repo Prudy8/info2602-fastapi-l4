@@ -1,0 +1,30 @@
+$kind: http-example
+request:
+  url: "{{host}}/signup"
+  method: POST
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+      	"username": "{{$randomUserName}}",
+      	"email": "{{$randomEmail}}",
+      	"password": "{{$randomPassword}}"
+      }
+response:
+  statusCode: 201
+  statusText: Created
+  headers:
+    Access-Control-Allow-Origin: "*"
+    Content-Length: "44"
+    Content-Type: application/json
+    Date: Sun, 03 Mar 2024 00:33:57 GMT
+    Server: Werkzeug/3.0.1 Python/3.8.16
+  body:
+    type: json
+    content: |-
+      {
+          "message": "Jennings.Goodwin created"
+      }
+order: 1000
