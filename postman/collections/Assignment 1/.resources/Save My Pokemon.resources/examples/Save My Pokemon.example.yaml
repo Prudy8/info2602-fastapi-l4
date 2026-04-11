@@ -1,0 +1,30 @@
+$kind: http-example
+request:
+  url: "{{host}}/mypokemon"
+  method: POST
+  headers:
+    Content-Type: application/json
+    Cookie: access_token={{access_token}}
+  body:
+    type: json
+    content: |-
+      {
+      	"pokemon_id":{{random_num}},
+      	"name": "{{$randomFirstName}}"
+      }
+response:
+  statusCode: 201
+  statusText: Created
+  headers:
+    Access-Control-Allow-Origin: "*"
+    Content-Length: "48"
+    Content-Type: application/json
+    Date: Sun, 03 Mar 2024 00:39:25 GMT
+    Server: Werkzeug/3.0.1 Python/3.8.16
+  body:
+    type: json
+    content: |-
+      {
+          "message": "Reinhold captured with id: 1"
+      }
+order: 1000
