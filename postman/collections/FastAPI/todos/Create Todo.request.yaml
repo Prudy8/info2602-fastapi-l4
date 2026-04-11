@@ -1,0 +1,19 @@
+$kind: http-request
+url: "{{baseUrl}}/todos"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: application/json
+body:
+  type: json
+  content: |-
+    {
+      "text": "string"
+    }
+auth:
+  type: oauth2
+  credentials:
+    accessTokenUrl: token
+    grant_type: password_credentials
+examples: ./.resources/Create Todo.resources/examples
+order: 2000
