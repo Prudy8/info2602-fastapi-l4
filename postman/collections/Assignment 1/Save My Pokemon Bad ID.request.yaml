@@ -1,0 +1,53 @@
+$kind: http-request
+description: Should return an appropriate error message and status when a bad
+  pokemon_id is given.
+url: "{{host}}/mypokemon"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+    	"pokemon_id":{{bad_id}},
+    	"name": "{{$randomFirstName}}"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{access_token}}"
+scripts:
+  - type: beforeRequest
+    code: pm.collectionVariables.set("bad_id", _.random(10000, 19999));
+    language: text/javascript
+  - type: afterResponse
+    code: >+
+      pm.test("Content-Type header is application/json", () => {
+        pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');
+      });
+
+
+      const { pokemon_id } = JSON.parse(pm.request.body.raw);
+
+
+      if(pm.response.headers.get('Content-Type') == 'application/json'){
+
+      	const {detail} = pm.response.json();
+
+      	pm.test(`Should return '${pokemon_id} is not a valid pokemon id'`, function () {
+      			pm.expect(detail).to.eql(`${pokemon_id} is not a valid pokemon id`);
+      		}
+      	);
+
+      	pm.test("Should have the correct status code", function () {
+      		
+      		pm.expect(pm.response.code).to.eql(400);
+      		
+      	});
+
+      }
+
+
+    language: text/javascript
+examples: ./.resources/Save My Pokemon Bad ID.resources/examples
+order: 9000
