@@ -1,0 +1,38 @@
+$kind: http-request
+description: Returns an appropriate error and status when the UserPokemon.id
+  given does not belong to the user or is invalid.
+url: "{{host}}/mypokemon/{{bad_id}}"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{access_token}}"
+scripts:
+  - type: afterResponse
+    code: >
+      
+      let username = pm.collectionVariables.get('username');
+
+      let bad_id = pm.collectionVariables.get('bad_id');
+
+
+
+      pm.test(`Error`, function () {
+          var {detail} = pm.response.json();
+      	pm.expect(detail).to.contain(`Id ${bad_id} is invalid or does not belong to ${username}`);
+      });
+
+
+
+      pm.test(
+      	"Should respond with the correct status", 
+      	function () {
+      		pm.response.to.have.status(401);
+      	}
+      );
+    language: text/javascript
+  - type: beforeRequest
+    code: pm.collectionVariables.set("bad_id", _.random(100000, 199999));
+    language: text/javascript
+examples: ./.resources/Get My Pokemon - Bad ID.resources/examples
+order: 12000
