@@ -1,0 +1,34 @@
+$kind: http-request
+description: Allows a user to login and recieve their token
+url: "{{host}}/login"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: formdata
+  content:
+    - type: text
+      key: username
+      value: "{{username}}"
+    - type: text
+      key: password
+      value: "{{password}}"
+auth:
+  type: noauth
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Returned Access Token\", function () {
+
+      \    var jsonData = pm.response.json();
+
+      \    pm.collectionVariables.set('access_token',
+      jsonData['access_token'])\ 
+
+      });
+
+
+
+      \   "
+    language: text/javascript
+examples: ./.resources/Login - Success.resources/examples
+order: 7000
