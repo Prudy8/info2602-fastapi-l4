@@ -1,0 +1,14 @@
+$kind: http-request
+description: An unauthorized route that gets the home page
+url: "{{host}}"
+method: GET
+scripts:
+  - type: afterResponse
+    code: "pm.test(`Should return \"<h1>Poke API v1.0</h1>\"'`, function () {\r
+
+      \tpm.expect(pm.response.text()).to.contain(`<h1>Poke API v1.0</h1>`);\r
+
+      });"
+    language: text/javascript
+examples: ./.resources/Root.resources/examples
+order: 1000
