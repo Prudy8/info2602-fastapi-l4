@@ -1,0 +1,24 @@
+$kind: http-example
+request:
+  url: "{{host}}/mypokemon"
+  method: GET
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Access-Control-Allow-Origin: "*"
+    Content-Length: "73"
+    Content-Type: application/json
+    Date: Sun, 03 Mar 2024 00:39:54 GMT
+    Server: Werkzeug/3.0.1 Python/3.8.16
+  body:
+    type: json
+    content: |-
+      [
+          {
+              "id": 1,
+              "name": "Reinhold",
+              "species": "Weedle"
+          }
+      ]
+order: 1000
