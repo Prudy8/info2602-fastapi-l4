@@ -1,0 +1,44 @@
+$kind: http-request
+description: Lists all pokemon objects in the database
+url: "{{host}}/pokemon"
+method: GET
+scripts:
+  - type: afterResponse
+    code: >-
+      
+      var schema = {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "pokemon_id": {
+              "type": "number"
+            },
+            "name":{"type":"string"},
+            "attack":{"type":"number"},
+            "defence":{"type":"number"},
+            "sp_attack":{"type":"number"},
+            "sp_defense":{"type":"number"},
+            "speed":{"type":"number"},
+            "hp":{"type":"number"},
+            "height":{"type": ["number", "null"]},
+            "weight":{"type": ["number", "null"]},
+            "type2": {"type": ["string", "null"]},
+            "type1": {"type": "string"}
+          },
+          "required": [ "pokemon_id", "type1", "type2" ]
+        }
+      };
+
+
+
+      pm.test(
+          `Pokemon data should have the attributes pokemon_id, attack, defence, sp_attack, sp_defence, speed, hp, height, weight, type1 and type2 with an appropriate value or null`, 
+          function() {
+              var jsonData = pm.response.json();
+              pm.expect(tv4.validate(jsonData, schema)).to.be.true;
+          }
+      );
+    language: text/javascript
+examples: ./.resources/List Pokemon.resources/examples
+order: 3000
