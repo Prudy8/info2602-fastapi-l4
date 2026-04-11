@@ -1,0 +1,46 @@
+$kind: http-request
+description: Returns and appropriate error and status code when the
+  UserPokemon.id given is invalid or does not belong to the authorized user.
+url: "{{host}}/mypokemon/{{bad_id}}"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: '{ "name": "{{$randomFirstName}}"}'
+auth:
+  type: bearer
+  credentials:
+    token: "{{access_token}}"
+scripts:
+  - type: afterResponse
+    code: >
+      const bad_id = pm.collectionVariables.get("bad_id");
+
+      const username = pm.collectionVariables.get('username');
+
+
+
+      pm.test("Content-Type header is application/json", () => {
+        pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');
+      });
+
+
+      if(pm.response.headers.get('Content-Type') == 'application/json'){
+
+      	pm.test(`Should return 'Id ${bad_id} is invalid or does not belong to ${username}`, function () {
+      		var {detail} = pm.response.json();
+      		pm.expect(detail).to.eql(`Id ${bad_id} is invalid or does not belong to ${username}`);
+      	});
+
+      	pm.test(
+      		"Should respond with the correct status", 
+      		function () {
+      			pm.response.to.have.status(401);
+      		}
+      	);
+
+      }
+    language: text/javascript
+examples: ./.resources/Update My Pokemon - Bad ID.resources/examples
+order: 14000
