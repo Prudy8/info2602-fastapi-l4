@@ -1,0 +1,30 @@
+$kind: http-example
+request:
+  url: "{{host}}/mypokemon/{{bad_id}}"
+  method: DELETE
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: ""
+response:
+  statusCode: 401
+  statusText: Unauthorized
+  headers:
+    Content-Length: "65"
+    Content-Type: application/json
+    Date: Tue, 10 Feb 2026 13:30:17 GMT
+    Server: uvicorn
+    Vary: Origin
+    X-Coder-Build-Version: v2.30.0+43e67d1
+    X-Coder-Request-Id: 8ddfea23-b9e2-4b50-aef4-dfb5528d3735
+    X-Ratelimit-Limit: "512"
+    X-Ratelimit-Remaining: "508"
+    X-Ratelimit-Reset: "1770730260"
+  body:
+    type: text
+    content: |-
+      {
+          "detail": "Id 121693 is invalid or does not belong to Sam_Hane4"
+      }
+order: 1000
