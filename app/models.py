@@ -68,3 +68,20 @@ class Todo(SQLModel, table=True):
     
     def get_cat_list(self):
         return ', '.join([category.text for category in self.categories])
+    
+class CategoryItem(SQLModel):
+    id: Optional[int]
+    text: str
+
+class CategoryCreate(SQLModel):
+    text: str
+
+class CategoryResponse(SQLModel):
+    id: Optional[int]
+    text: str
+
+class TodoResponse(SQLModel):
+    id: Optional[int] = Field(primary_key=True, default=None)
+    text: str
+    done: bool = False
+    categories: list[CategoryItem] = []
