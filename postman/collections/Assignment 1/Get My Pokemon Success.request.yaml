@@ -1,0 +1,33 @@
+$kind: http-request
+description: Returns the UserPokemon object with the specified UserPokemon.id
+  given at the end of the url only if it is associated with the authorized user.
+url: "{{host}}/mypokemon/{{id}}"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{access_token}}"
+scripts:
+  - type: afterResponse
+    code: >-
+      
+      var schema = {
+          "type": "object",
+          "properties": {
+      		"id":{"type":"number"},
+              "name":{"type":"string"},
+              "species":{ "type":"string"},
+          },
+          "required": [ "name", "species"]
+        }
+
+      pm.test(
+          `Pokemon data should have the attributes name and status with the appropriate values`, 
+          function() {
+              var jsonData = pm.response.json();
+              pm.expect(tv4.validate(jsonData, schema)).to.be.true;
+          }
+      );
+    language: text/javascript
+examples: ./.resources/Get My Pokemon Success.resources/examples
+order: 11000
