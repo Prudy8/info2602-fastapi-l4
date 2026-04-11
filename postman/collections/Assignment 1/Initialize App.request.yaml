@@ -1,0 +1,51 @@
+$kind: http-request
+description: Initializes the database and returns a success message
+url: "{{host}}/init"
+method: GET
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Content-Type header is application/json\", () => {\r
+
+      \ 
+      pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/js\
+      on');\r
+
+      });\r
+
+      \r
+
+      if(pm.response.headers.get('Content-Type') == 'application/json'){\r
+
+      \r
+
+      \tconst {message} = pm.response.json();\r
+
+      \r
+
+      \tpm.test(\"Should return the message 'Database Initialized!'\", function
+      () {\r
+
+      \t\t\tpm.expect(message).to.eql('Database Initialized!');\r
+
+      \t\t}\r
+
+      \t);\r
+
+      \r
+
+      \tpm.test(\"Should have the correct status code\", function () {\r
+
+      \t\t\r
+
+      \t\tpm.expect(pm.response.code).to.eql(200);\r
+
+      \t\t\r
+
+      \t});\r
+
+      \r
+
+      }"
+    language: text/javascript
+examples: ./.resources/Initialize App.resources/examples
+order: 2000
