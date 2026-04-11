@@ -1,0 +1,13 @@
+$kind: collection
+description: The API testsuite for INFO 2602 Assignment 1
+variables:
+  name: judy
+  username: bob
+  password: bobpass
+  email: bob@mail.com
+  id: ""
+  credentials: ""
+  random_num: ""
+  bad_num: ""
+  bad_id: ""
+  access_token: ""
