@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{baseUrl}}/todo/:id"
+method: GET
+headers:
+  Accept: application/json
+pathVariables:
+  id: "9312"
+auth:
+  type: oauth2
+  credentials:
+    accessTokenUrl: token
+    grant_type: password_credentials
+examples: ./.resources/Get Todo By Id.resources/examples
+order: 1000
