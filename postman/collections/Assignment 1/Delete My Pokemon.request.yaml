@@ -1,0 +1,91 @@
+$kind: http-request
+description: >-
+  Allows a user to release their pokemon
+
+
+  Deletes the UserPokemon object of the specified id given at the end or the url
+  if it is associated with the authorized user.
+url: "{{host}}/mypokemon/{{id}}"
+method: DELETE
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: ""
+auth:
+  type: bearer
+  credentials:
+    token: "{{access_token}}"
+scripts:
+  - type: afterResponse
+    code: "const token = pm.collectionVariables.get(\"access_token\");\r
+
+      const username = pm.collectionVariables.get('username');\r
+
+      const name = pm.collectionVariables.get('name');\r
+
+      \r
+
+      pm.test(\"Content-Type header is application/json\", () => {\r
+
+      \ 
+      pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/js\
+      on');\r
+
+      });\r
+
+      \r
+
+      if(pm.response.headers.get('Content-Type') == 'application/json'){\r
+
+      \r
+
+      \tconst { message } = pm.response.json();\r
+
+      \r
+
+      \tpm.test(\"Should delete the specified pokemon from the user's
+      collection\", function () {\r
+
+      \t\tpm.sendRequest(\r
+
+      \t\t\t{\r
+
+      \t\t\t\turl:request.url,\r
+
+      \t\t\t\tmethod:'GET',\r
+
+      \t\t\t\theader: `Cookie: ${token}`\r
+
+      \t\t\t}, \r
+
+      \t\t\tfunction (err, response) {\r
+
+      \t\t\t\tpm.expect(response.code).to.eql(401);\r
+
+      \t\t\t}\r
+
+      \t\t);\r
+
+      \t});\r
+
+      \r
+
+      \r
+
+      \tpm.test(\"Should return <name> released\", function () {\r
+
+      \t\t\r
+
+      \t\tpm.expect(message).to.eql(`${name} released`);\r
+
+      \t\tpm.expect(pm.response.code).to.eql(200);\r
+
+      \t\t\r
+
+      \t});\r
+
+      }"
+    language: text/javascript
+examples: ./.resources/Delete My Pokemon.resources/examples
+order: 15000
