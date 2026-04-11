@@ -1,0 +1,35 @@
+$kind: http-request
+description: Returns an appropriate error message and status code when account
+  creation fails
+url: "{{host}}/signup"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+    	"username": "{{username}}",
+    	"email": "{{$randomEmail}}",
+    	"password": "{{$randomPassword}}"
+    }
+scripts:
+  - type: afterResponse
+    code: |
+      pm.test(
+      	"Should respond with 'username or email already exists'", 
+      	function () {
+      		let { detail } = pm.response.json();
+          	pm.expect(detail).to.eql('username or email already exists');
+      	}
+      );
+
+      pm.test(
+      	"Should respond with the correct status", 
+      	function () {
+      		pm.response.to.have.status(400);
+      	}
+      );
+    language: text/javascript
+examples: ./.resources/Sign Up - Fail.resources/examples
+order: 5000
