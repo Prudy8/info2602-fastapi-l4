@@ -1,0 +1,32 @@
+$kind: http-example
+request:
+  url: "{{host}}/mypokemon/{{id}}"
+  method: DELETE
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: ""
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Date: Fri, 10 Feb 2023 13:57:32 GMT
+    Content-Type: application/json
+    Transfer-Encoding: chunked
+    Connection: keep-alive
+    CF-Ray: 79755abb68ea32f2-JAX
+    Access-Control-Allow-Origin: "*"
+    Vary: Accept-Encoding
+    CF-Cache-Status: DYNAMIC
+    x-render-origin-server: gunicorn
+    Server: cloudflare
+    Content-Encoding: br
+    alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+  body:
+    type: json
+    content: |-
+      {
+          "message": "Omer released"
+      }
+order: 1000
