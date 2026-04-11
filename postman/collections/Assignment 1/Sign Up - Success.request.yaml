@@ -1,0 +1,53 @@
+$kind: http-request
+description: Allows the user to create a user account returns an appropriate
+  message and status.
+url: "{{host}}/signup"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+    	"username": "{{$randomUserName}}",
+    	"email": "{{$randomEmail}}",
+    	"password": "{{$randomPassword}}"
+    }
+scripts:
+  - type: afterResponse
+    code: >-
+      let { username, password, email } = JSON.parse(pm.request.body.raw);
+
+
+      pm.collectionVariables.set('username', username);
+
+      pm.collectionVariables.set('password', password);
+
+      pm.collectionVariables.set('email', email);
+
+
+      pm.test(
+      	"Should respond with <username> created message", 
+      	function () {
+      		let { message } = pm.response.json();
+          	pm.expect(message).to.eql(`${username} created`);
+      	}
+      );
+
+
+      pm.test(
+      	"Should respond with the correct status", 
+      	function () {
+      		pm.response.to.have.status(201);
+      	}
+      );
+
+
+
+      // let { error, message } = pm.response.json();
+
+      // 	pm.expect(error ?? message).to.be.oneOf(["username or email already
+      exists", "user created"]);
+    language: text/javascript
+examples: ./.resources/Sign Up - Success.resources/examples
+order: 4000
